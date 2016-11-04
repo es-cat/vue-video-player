@@ -1,0 +1,16 @@
+.logo {
+  display: block;
+  background-image: url(../images/sprite.png?v=0.36641531926579773);
+  background-position: 0px 0px;
+  width:208px;
+  height: 64px;
+/*source-image:D:\myGit\friendo\BrandBase\template\ctbcGoHome\src\images\sprites\logo.png*/
+}
+@mixin logo() {
+  display: block;
+  background-image: url(../images/sprite.png?v=0.36641531926579773);
+  background-position: 0px 0px;
+  width:208px;
+  height: 64px;
+/*source-image:D:\myGit\friendo\BrandBase\template\ctbcGoHome\src\images\sprites\logo.png*/
+}

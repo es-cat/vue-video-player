@@ -1,0 +1,132 @@
+@charset 'UTF-8';
+// /* ----- IMPORT -----*/
+// //1.utils
+// @import "utils/_bemify.scss";//A set of Sass mixins to write well-structured, maintainable, idiomatic BEM-style .scss source:
+// @import "utils/_variables.scss";
+// @import "utils/_mixins.scss";
+// @import "utils/_colors.scss";
+// @import "utils/_grid.scss";
+// @import "utils/_animation.scss";
+// @import "utils/_animate.scss";
+// @import "_sprite.scss";//Auto generator by gulp
+// //2.vendors
+// //3.base
+@import "base/_reset.scss";
+@import "base/_typography.scss";
+// //4.layout
+// @import "layout/_layout.scss";
+// @import "layout/_nav.scss";
+// //5.components
+// @import "components/_load.scss"; //html 在 load.js 裡
+// //6.pages
+// //7.themes
+
+
+body {
+    background: #eee;
+}
+
+.feedback {
+    &__avater {
+        border-radius: 50%;
+        height: 60px;
+        width: 60px;
+        float: left;
+        img {
+            width: 100%;
+        }
+        &--small {
+            height: 30px;
+            width: 30px;
+        }
+    }
+    &__content {
+        overflow: hidden;
+    }
+    &__form {
+        padding: 5px;
+        textarea {
+            display: inline-block;
+        }
+        button {
+            display: inline-block;
+        }
+    }
+    &--box {
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
+        padding: 5px;
+    }
+}
+
+.video-player {
+    $h: 10px;
+    width: 800px;
+    margin: 0 auto;
+    &__feedback-display {
+        position: absolute;
+        width: 40%;
+        top: 10px;
+        left: 10px;
+    }
+    &__comment {
+        position: absolute;
+        width: 100%;
+        bottom: 10px;
+        .feedback {
+            width: 60%;
+            margin: 0 auto;
+        }
+    }
+    &__viewer {
+        position: relative;
+    }
+    &__container {
+        margin: 0 auto;
+        position: relative;
+    }
+    &__timeline {
+        background: #c2ffed;
+        width: 100%;
+        height: $h;
+        position: relative;
+        border-radius: 10px;
+    }
+    &__slider {
+        box-sizing: border-box;
+        background: #00d194;
+        height: 100%;
+        width: 50%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: 10px 0 0 10px;
+        border-right: 2px solid rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        // &:before {
+        //     cursor: pointer;
+        //     border-radius: 50%;
+        //     background: #fff;
+        //     position: absolute;
+        //     top: #{$h/2*-0.95};
+        //     right: #{$h/4*-1.2};
+        //     font-size: 0.9em;
+        //     content: '.';
+        //     width: $h/2;
+        //     height: $h/2;
+        // }
+    }
+    &__ctrl {
+        font-size: 18px;
+        margin: 5px 1px;
+        border-radius: 15px;
+        display: inline-block;
+        cursor: pointer;
+        text-align: center;
+        background: #00d194;
+        text-align: center;
+        padding: 5px;
+        min-width: 100px;
+    }
+}

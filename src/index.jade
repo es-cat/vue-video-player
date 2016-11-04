@@ -1,0 +1,74 @@
+doctype
+html(itemscope,itemtype="http://schema.org/Article")
+    include _head.jade
+    body
+        //- include _ga.jade
+        div
+            div.l-wrap
+                div.l-main
+                    //暫停 .video-player--paused
+                    div.video-player
+                        div.video-player__container
+                            //viewer
+                            div.video-player__viewer
+                                video(width='100%')
+                                    source(src='http://rmcdn.2mdn.net/Demo/vast_inspector/android.mp4', type='video/mp4')  
+                                //comment
+                                div.video-player__comment
+                                    div.feedback.clearfix
+                                        img.feedback__avater.feedback__avater--small(src="https://dummyimage.com/400x400/000/fff", alt="user名字")
+                                        div.feedback__content
+                                            form.feedback__form(id="")
+                                                textarea
+                                                button 送出
+                            //timeline
+                            div.video-player__timeline 
+                                div.video-player__slider
+                            //ctrls
+                            div.video-player__ctrls
+                                div.video-player__ctrl.video-player__play-btn 播放
+                                div.video-player__ctrl.video-player__time 時間
+                                div.video-player__ctrl.video-palyer__volume 音量ON
+                                    div.video-player__mute
+                                    div.video-player__volume__ctrls
+                                        div.volume__bar
+                                            div.volume__slide-bar
+                                div.video-player__ctrl.video-player__feedback 留言
+                                div.video-player__ctrl.video-player__settings 設定
+                            //display feedback
+                            div.video-player__feedback-display
+                                div.feedback.feedback--box.clearfix
+                                    img.feedback__avater(src="https://dummyimage.com/400x400/000/fff", alt="user名字")
+                                    div.feedback__content
+                                        div.feedback__info 時間 名字等資訊
+                                        div.feedback__content 內容
+            div.l-footer.footer
+                div.l-container
+                    p footer
+            div.fb-root
+
+        <script src="js/app.js"></script>
+
+
+        //- //vue compents template
+        //- script(type="text/x-template", id="v-nav")
+        //-     include _vue-nav.jade
+        //- script(type="text/x-template", id="v-index")
+        //-     include _vue-index.jade
+        //- script(type="text/x-template", id="v-account")
+        //-     include _vue-account.jade
+        //- script(type="text/x-template", id="v-result-has")
+        //-     include _vue-result-has.jade
+        //- script(type="text/x-template", id="v-result-nohas")
+        //-     include _vue-result-nohas.jade
+
+  
+        //- script(type='text/javascript').         
+        //-     (function(d, s, id) {
+        //-         var js, fjs = d.getElementsByTagName(s)[0];
+        //-         if (d.getElementById(id)) return;
+        //-         js = d.createElement(s);
+        //-         js.id = id;
+        //-         js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.4&appId=262477160615577";
+        //-         fjs.parentNode.insertBefore(js, fjs);
+        //-     }(document, 'script', 'facebook-jssdk'));

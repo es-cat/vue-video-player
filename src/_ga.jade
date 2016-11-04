@@ -1,0 +1,90 @@
+script.
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-34903007-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function () {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+    //- var gaLog = function (tag) {
+    //-     _gaq.push(['_trackEvent', '中信方回娘家',"點擊", tag, 1, true]);
+    //- };   
+
+script.
+    !function (f, b, e, v, n, t, s) {
+        if (f.fbq) return; n = f.fbq = function () {
+            n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+        }; if (!f._fbq) f._fbq = n;
+        n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = []; t = b.createElement(e); t.async = !0;
+        t.src = v; s = b.getElementsByTagName(e)[0]; 
+        s.parentNode.insertBefore(t, s);
+    } (window,document, 'script', '//connect.facebook.net/en_US/fbevents.js');
+
+    fbq('init', '525795494240921');
+    fbq('track', "PageView");
+
+noscript.
+    <img height="1" width="1" style="display:none"src="https://www.facebook.com/tr?id=525795494240921&ev=PageView&noscript=1"/>
+
+
+script.
+    var google_tag_params = {
+        dynx_itemid: 'REPLACE_WITH_VALUE',
+        dynx_itemid2: 'REPLACE_WITH_VALUE',
+        dynx_pagetype: 'REPLACE_WITH_VALUE',
+        dynx_totalvalue: 'REPLACE_WITH_VALUE',
+        local_id: 'REPLACE_WITH_VALUE',
+        local_pagetype: 'REPLACE_WITH_VALUE',
+        local_totalvalue: 'REPLACE_WITH_VALUE'
+    };
+
+script.
+    var BrowserDetect = {
+        init: function () {
+            this.browser = this.searchString(this.dataBrowser) || "Other";
+            this.version = this.searchVersion(navigator.userAgent) || this.searchVersion(navigator.appVersion) || "Unknown";
+        },
+        searchString: function (data) {
+            for (var i = 0; i < data.length; i++) {
+                var dataString = data[i].string;
+                this.versionSearchString = data[i].subString;
+
+                if (dataString.indexOf(data[i].subString) !== -1) {
+                    return data[i].identity;
+                }
+            }
+        },
+        searchVersion: function (dataString) {
+            var index = dataString.indexOf(this.versionSearchString);
+            if (index === -1) {
+                return;
+            }
+
+            var rv = dataString.indexOf("rv:");
+            if (this.versionSearchString === "Trident" && rv !== -1) {
+                return parseFloat(dataString.substring(rv + 3));
+            } else {
+                return parseFloat(dataString.substring(index + this.versionSearchString.length + 1));
+            }
+        },
+
+        dataBrowser: [
+            { string: navigator.userAgent, subString: "Edge", identity: "MS Edge" },
+            { string: navigator.userAgent, subString: "MSIE", identity: "Explorer" },
+            { string: navigator.userAgent, subString: "Trident", identity: "Explorer" },
+            { string: navigator.userAgent, subString: "Firefox", identity: "Firefox" },
+            { string: navigator.userAgent, subString: "Opera", identity: "Opera" },
+            { string: navigator.userAgent, subString: "OPR", identity: "Opera" },
+
+            { string: navigator.userAgent, subString: "Chrome", identity: "Chrome" },
+            { string: navigator.userAgent, subString: "Safari", identity: "Safari" }
+        ]
+    };
+    BrowserDetect.init();
+
+    if (BrowserDetect.browser == "Explorer" && parseInt(BrowserDetect.version) < 9) {
+        alert('您用的瀏覽器過舊，可能無法正常瀏覽頁面，若想要得到完整體驗，請改用新版瀏覽器(IE10以上、Firefox、Chrome）瀏覽。');
+    }

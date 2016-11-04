@@ -1,0 +1,65 @@
+$grid-width:  8.33333333%;
+$tran: 0.3s ease-in all;
+@function grid-width($n) {
+     @return $n * $grid-width;
+}
+
+@function get-gridW($n) {
+     @return ($n * $grid-width);
+}
+
+
+@function get-vw($px) {
+   $vw-context: (1680 * 0.01);
+   @return ( $px / $vw-context ) * 1vw;
+}
+
+@function get-mvw($px) {
+   $vw-context: (640 * 0.01);
+   @return ( $px / $vw-context ) * 1vw;
+}
+
+@function get-vh($px) {
+   $vw-context: (1680 * 0.01);
+   @return ( $px / $vw-context ) * (960/1680) * 1vw;
+}
+
+
+
+
+//@include grid(1.5) 允許小數點
+@mixin grid($n){
+    transition:$tran;
+    display: block;
+    float: left;        
+    width:grid-width($n); 
+    box-sizing:border-box;
+    padding:0 10px;
+}
+
+@mixin getWitdh($n){
+    transition:$tran;
+    width:grid-width($n); 
+}
+
+
+$i: 12;
+@while $i > 0 {
+    .l-grid#{$i} {
+        transition:$tran;
+        display: block;
+        float: left;        
+        width:grid-width($i); 
+        box-sizing:border-box;
+        padding:0 10px;
+    }
+    $i: $i - 1;
+}
+
+
+.l-row:after {
+  clear: both;
+  content: '';
+  display: table;
+}
+
