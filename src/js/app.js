@@ -155,33 +155,34 @@
         mounted: function() {
             var _this = this;
             _this.video = _this.$refs.video;
-            _this.video2 = _this.$refs.video2;
+            
+            // _this.video2 = _this.$refs.video2;
 
 
-            var def1 = $.Deferred();
-            var def2 = $.Deferred();
+            // var def1 = $.Deferred();
+            // var def2 = $.Deferred();
 
-            $.when(def1, def2).done(function(a,b) {
-                console.log('Everything playing');
-                console.log(a);
-                console.log(b);
+            // $.when(def1, def2).done(function(a,b) {
+            //     console.log('Everything playing');
+            //     console.log(a);
+            //     console.log(b);
 
-            });
+            // });
 
 
-            $(_this.video).on('playing', function(e) {
-                // deferred completed ASAP
-                if (def1 !== undefined) {
-                    def1.resolve(e);
-                }
-            });
+            // $(_this.video).on('playing', function(e) {
+            //     // deferred completed ASAP
+            //     if (def1 !== undefined) {
+            //         def1.resolve(e);
+            //     }
+            // });
 
-            $(_this.video2).on('playing',function(e) {
-                // deferred completed ASAP
-                if (def2 !== undefined) {
-                    def2.resolve(e);
-                }
-            });
+            // $(_this.video2).on('playing',function(e) {
+            //     // deferred completed ASAP
+            //     if (def2 !== undefined) {
+            //         def2.resolve(e);
+            //     }
+            // });
 
         }
 
