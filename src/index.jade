@@ -3,7 +3,7 @@ html(itemscope,itemtype="http://schema.org/Article")
     include _head.jade
     body
         //- include _ga.jade
-        div
+        div#app
             div.l-wrap
                 div.l-main
                     //暫停 .video-player--paused
@@ -11,8 +11,9 @@ html(itemscope,itemtype="http://schema.org/Article")
                         div.video-player__container
                             //viewer
                             div.video-player__viewer
-                                video(width='100%')
-                                    source(src='http://rmcdn.2mdn.net/Demo/vast_inspector/android.mp4', type='video/mp4')  
+                                div.video-player__loading( v-show ="isLoading" ) 讀取中…
+                                video(width='100%',ref="video",id="video1", autoplay, v-on:timeupdate='timeupdate', v-on:loadstart='loadstart($event)', v-on:canplay='canplay($event)', v-on:seeking='seeking($event)', v-on:seeked='seeked($event)')
+                                    source(src='http://rmcdn.2mdn.net/Demo/vast_inspector/android.mp4', type='video/mp4') 
                                 //comment
                                 div.video-player__comment
                                     div.feedback.clearfix
@@ -22,12 +23,16 @@ html(itemscope,itemtype="http://schema.org/Article")
                                                 textarea
                                                 button 送出
                             //timeline
-                            div.video-player__timeline 
-                                div.video-player__slider
+                            div.video-player__timeline(ref="timelineBar", @mousedown="startDrag($event)", @touchstart="startDrag($event)", @mousemove="onDrag", @touchmove="onDrag",@mouseup="stopDrag", @touchend="stopDrag", @mouseleave="stopDrag")
+                                div.video-player__canplay(ref="canplayBar")
+                                div.video-player__progress(ref="progressBar", v-bind:style="{width: computedTimeline  + '%'}")
+                                div.video-player__slider(ref="sliderBar",  v-show ="isDrag", v-bind:style="{width: ( isDrag ? computedDragOffsetX : 0 )+ '%'}")
+                                    div.video-player__seek-time.tipinfo
+                                        div.tipinfo__content() {{ formatSeekTime }}
                             //ctrls
                             div.video-player__ctrls
-                                div.video-player__ctrl.video-player__play-btn 播放
-                                div.video-player__ctrl.video-player__time 時間
+                                div.video-player__ctrl.video-player__play-btn(@click="play($event)") {{UIplayBtn}}
+                                div.video-player__ctrl.video-player__time-display {{formatCurrentTime}} / {{formatDurationTime}}
                                 div.video-player__ctrl.video-palyer__volume 音量ON
                                     div.video-player__mute
                                     div.video-player__volume__ctrls
@@ -47,6 +52,7 @@ html(itemscope,itemtype="http://schema.org/Article")
                     p footer
             div.fb-root
 
+        <script src="js/lib/date.js"></script>
         <script src="js/app.js"></script>
 
 

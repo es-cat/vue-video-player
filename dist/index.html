@@ -27,7 +27,7 @@
   <script src="js/vue-router.js"></script>
   <script src="js/video.js"></script>
   <body>
-    <div>
+    <div id="app">
       <div class="l-wrap">
         <div class="l-main">
           <!--暫停 .video-player--paused-->
@@ -35,7 +35,8 @@
             <div class="video-player__container">
               <!--viewer-->
               <div class="video-player__viewer">
-                <video width="100%">
+                <div v-show="isLoading" class="video-player__loading">讀取中…</div>
+                <video width="100%" ref="video" id="video1" autoplay v-on:timeupdate="timeupdate" v-on:loadstart="loadstart($event)" v-on:canplay="canplay($event)" v-on:seeking="seeking($event)" v-on:seeked="seeked($event)">
                   <source src="http://rmcdn.2mdn.net/Demo/vast_inspector/android.mp4" type="video/mp4">
                 </video>
                 <!--comment-->
@@ -51,13 +52,19 @@
                 </div>
               </div>
               <!--timeline-->
-              <div class="video-player__timeline"> 
-                <div class="video-player__slider"></div>
+              <div ref="timelineBar" @mousedown="startDrag($event)" @touchstart="startDrag($event)" @mousemove="onDrag" @touchmove="onDrag" @mouseup="stopDrag" @touchend="stopDrag" @mouseleave="stopDrag" class="video-player__timeline">
+                <div ref="canplayBar" class="video-player__canplay"></div>
+                <div ref="progressBar" v-bind:style="{width: computedTimeline  + '%'}" class="video-player__progress"></div>
+                <div ref="sliderBar" v-show="isDrag" v-bind:style="{width: ( isDrag ? computedDragOffsetX : 0 )+ '%'}" class="video-player__slider">
+                  <div class="video-player__seek-time tipinfo">
+                    <div class="tipinfo__content">{{ formatSeekTime }}</div>
+                  </div>
+                </div>
               </div>
               <!--ctrls-->
               <div class="video-player__ctrls">
-                <div class="video-player__ctrl video-player__play-btn">播放</div>
-                <div class="video-player__ctrl video-player__time">時間</div>
+                <div @click="play($event)" class="video-player__ctrl video-player__play-btn">{{UIplayBtn}}</div>
+                <div class="video-player__ctrl video-player__time-display">{{formatCurrentTime}} / {{formatDurationTime}}</div>
                 <div class="video-player__ctrl video-palyer__volume">音量ON
                   <div class="video-player__mute"></div>
                   <div class="video-player__volume__ctrls">
@@ -88,7 +95,8 @@
         </div>
       </div>
       <div class="fb-root"></div>
-    </div><script src="js/app.js"></script>
+    </div><script src="js/lib/date.js"></script>
+    <script src="js/app.js"></script>
     
   </body>
 </html>
