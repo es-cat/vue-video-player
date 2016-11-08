@@ -12,6 +12,8 @@ html(itemscope,itemtype="http://schema.org/Article")
                             //viewer
                             div.video-player__viewer
                                 div.video-player__loading( v-show ="isLoading" ) 讀取中…
+                                //- video(width='500px', ref="video", autoplay)
+                                //-     source(src='http://clips.vorwaerts-gmbh.de/VfE_html5.mp4', type='video/mp4')
                                 video(width='100%',ref="video",id="video1", autoplay, v-on:timeupdate='timeupdate', v-on:loadstart='loadstart($event)', v-on:canplay='canplay($event)', v-on:seeking='seeking($event)', v-on:seeked='seeked($event)')
                                     source(src='http://rmcdn.2mdn.net/Demo/vast_inspector/android.mp4', type='video/mp4') 
                                 //comment
@@ -50,6 +52,7 @@ html(itemscope,itemtype="http://schema.org/Article")
             div.l-footer.footer
                 div.l-container
                     p footer
+
             div.fb-root
 
         <script src="js/lib/date.js"></script>

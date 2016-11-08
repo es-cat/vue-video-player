@@ -50,10 +50,10 @@
 
                 return _this.formatTime(time);
             },
-            formatCurrentTime: function(){
-                return this.formatTime(this.currentTime);   
+            formatCurrentTime: function() {
+                return this.formatTime(this.currentTime);
             },
-            formatDurationTime: function(){
+            formatDurationTime: function() {
                 return this.formatTime(this.duration);
             }
 
@@ -70,17 +70,12 @@
             formatTime: function(time) {
                 return (new Date).clearTime().addSeconds(time).toString('H:mm:ss');
             },
-            timeConvert: function() {
-                var _this = this;
-                var video = _this.video;
-                _this.syncStatus();
-            },
             syncStatus: function() {
                 var _this = this;
                 var video = _this.video;
 
                 _this.isPlaying = video.paused;
-                
+
             },
             timeupdate: function() {
                 var _this = this;
@@ -160,6 +155,34 @@
         mounted: function() {
             var _this = this;
             _this.video = _this.$refs.video;
+            _this.video2 = _this.$refs.video2;
+
+
+            var def1 = $.Deferred();
+            var def2 = $.Deferred();
+
+            $.when(def1, def2).done(function(a,b) {
+                console.log('Everything playing');
+                console.log(a);
+                console.log(b);
+
+            });
+
+
+            $(_this.video).on('playing', function(e) {
+                // deferred completed ASAP
+                if (def1 !== undefined) {
+                    def1.resolve(e);
+                }
+            });
+
+            $(_this.video2).on('playing',function(e) {
+                // deferred completed ASAP
+                if (def2 !== undefined) {
+                    def2.resolve(e);
+                }
+            });
+
         }
 
     })
