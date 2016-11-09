@@ -65,16 +65,14 @@
               <div class="video-player__ctrls">
                 <div @click="play($event)" class="video-player__ctrl video-player__play-btn">{{UIplayBtn}}</div>
                 <div class="video-player__ctrl video-player__time-display">{{formatCurrentTime}} / {{formatDurationTime}}</div>
-                <div class="video-player__ctrl video-palyer__volume">音量ON
+                <div @click="muted($event)" class="video-player__ctrl video-palyer__volume">音量{{isMuted}}
                   <div class="video-player__mute"></div>
-                  <div class="video-player__volume__ctrls">
-                    <div class="volume__bar">
-                      <div class="volume__slide-bar"></div>
-                    </div>
+                </div>
+                <div class="video-player__volume__ctrls">
+                  <div class="volume__bar">
+                    <input type="range" min="0" max="100" v-model="volume" step="1">
                   </div>
                 </div>
-                <div class="video-player__ctrl video-player__feedback">留言</div>
-                <div class="video-player__ctrl video-player__settings">設定</div>
               </div>
               <!--display feedback-->
               <div class="video-player__feedback-display">
@@ -90,9 +88,7 @@
         </div>
       </div>
       <div class="l-footer footer">
-        <div class="l-container">
-          <p>footer</p>
-        </div>
+        <div class="l-container"></div>
       </div>
       <div class="fb-root"></div>
     </div><script src="js/lib/date.js"></script>

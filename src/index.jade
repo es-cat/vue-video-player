@@ -12,7 +12,7 @@ html(itemscope,itemtype="http://schema.org/Article")
                             //viewer
                             div.video-player__viewer
                                 div.video-player__loading( v-show ="isLoading" ) 讀取中…
-                                //- video(width='500px', ref="video", autoplay)
+                                //- video(width='50%', ref="video", autoplay)
                                 //-     source(src='http://clips.vorwaerts-gmbh.de/VfE_html5.mp4', type='video/mp4')
                                 video(width='100%',ref="video",id="video1", autoplay, v-on:timeupdate='timeupdate', v-on:loadstart='loadstart($event)', v-on:canplay='canplay($event)', v-on:seeking='seeking($event)', v-on:seeked='seeked($event)')
                                     source(src='http://rmcdn.2mdn.net/Demo/vast_inspector/android.mp4', type='video/mp4') 
@@ -35,13 +35,14 @@ html(itemscope,itemtype="http://schema.org/Article")
                             div.video-player__ctrls
                                 div.video-player__ctrl.video-player__play-btn(@click="play($event)") {{UIplayBtn}}
                                 div.video-player__ctrl.video-player__time-display {{formatCurrentTime}} / {{formatDurationTime}}
-                                div.video-player__ctrl.video-palyer__volume 音量ON
+                                div.video-player__ctrl.video-palyer__volume(@click="muted($event)") 音量{{isMuted}}
                                     div.video-player__mute
-                                    div.video-player__volume__ctrls
-                                        div.volume__bar
-                                            div.volume__slide-bar
-                                div.video-player__ctrl.video-player__feedback 留言
-                                div.video-player__ctrl.video-player__settings 設定
+                                div.video-player__volume__ctrls
+                                    div.volume__bar
+                                        input(type="range", min="0", max="100", v-model="volume", step="1")
+
+                                //- div.video-player__ctrl.video-player__feedback 留言
+                                //- div.video-player__ctrl.video-player__settings 設定
                             //display feedback
                             div.video-player__feedback-display
                                 div.feedback.feedback--box.clearfix
@@ -51,7 +52,6 @@ html(itemscope,itemtype="http://schema.org/Article")
                                         div.feedback__content 內容
             div.l-footer.footer
                 div.l-container
-                    p footer
 
             div.fb-root
 

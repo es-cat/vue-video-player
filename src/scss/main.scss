@@ -62,6 +62,10 @@ body {
     $h: 15px;
     width: 800px;
     margin: 0 auto;
+    &__comment,
+    &__feedback-display {
+        display: none;
+    }
     &__feedback-display {
         position: absolute;
         width: 40%;
@@ -79,6 +83,10 @@ body {
     }
     &__viewer {
         position: relative;
+        text-align: center;
+        video {
+            display: inline-block;
+        }
     }
     &__loading {
         font-size: 28px;
@@ -172,4 +180,13 @@ body {
             bottom: 10px;
         }
     }
+    &__volume__ctrls {
+      display: inline-block;
+      input {
+        width: 100px;
+      }
+    }
 }
+
+
+

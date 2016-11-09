@@ -188,6 +188,8 @@ body {
 .video-player {
   width: 800px;
   margin: 0 auto; }
+  .video-player__comment, .video-player__feedback-display {
+    display: none; }
   .video-player__feedback-display {
     position: absolute;
     width: 40%;
@@ -201,7 +203,10 @@ body {
       width: 60%;
       margin: 0 auto; }
   .video-player__viewer {
-    position: relative; }
+    position: relative;
+    text-align: center; }
+    .video-player__viewer video {
+      display: inline-block; }
   .video-player__loading {
     font-size: 28px;
     color: #fff;
@@ -276,3 +281,7 @@ body {
       position: relative;
       left: 50%;
       bottom: 10px; }
+  .video-player__volume__ctrls {
+    display: inline-block; }
+    .video-player__volume__ctrls input {
+      width: 100px; }

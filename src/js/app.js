@@ -11,8 +11,7 @@
         }
     };
 
-
-
+    
 
 
     var app = new Vue({
@@ -24,11 +23,13 @@
             isCanPlay: false,
             isLoading: false,
             isSeeking: false,
+            isMuted: false,
             currentTime: 0,
             duration: 0,
             dragX: 0,
             videod: {},
             sliderBar: {},
+            volume: 80,
             progress: 0
         },
         computed: {
@@ -56,11 +57,18 @@
             formatDurationTime: function() {
                 return this.formatTime(this.duration);
             }
-
         },
         watch: {
-            isDrag: function(val) {
-
+            volume: function(val) {
+                var _this = this;
+                var video = _this.video;
+                video.volume = val / 100;
+                if (val <= 0) {
+                    video.muted = true;
+                } else {
+                    video.muted = false;
+                }
+                _this.isMuted = video.muted;
             },
             isLoading: function(val) {
 
@@ -94,8 +102,22 @@
                 }
                 _this.syncStatus();
             },
+            muted: function(e) {
+                var _this = this;
+                var video = _this.video;
+
+                if (video.muted) {
+                    video.muted = false;
+                } else {
+                    video.muted = true;
+                }
+
+                _this.isMuted = video.muted;
+
+            },
             loadstart: function(e) {
                 var _this = this;
+                console.log(e);
                 _this.isLoading = true;
             },
             canplay: function(e) {
@@ -155,7 +177,7 @@
         mounted: function() {
             var _this = this;
             _this.video = _this.$refs.video;
-            
+
             // _this.video2 = _this.$refs.video2;
 
 
