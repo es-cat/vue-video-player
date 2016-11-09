@@ -12,10 +12,7 @@ html(itemscope,itemtype="http://schema.org/Article")
                             //viewer
                             div.video-player__viewer
                                 div.video-player__loading( v-show ="isLoading" ) 讀取中…
-                                //- video(width='100%', ref="video")
-                                //-     source(src='http://clips.vorwaerts-gmbh.de/VfE_html5.mp4', type='video/mp4')
-                                video(width='100%',ref="video",id="video1", autoplay, v-on:timeupdate='timeupdate', v-on:loadstart='loadstart($event)', v-on:canplay='canplay($event)', v-on:seeking='seeking($event)', v-on:seeked='seeked($event)')
-                                    source(src='http://rmcdn.2mdn.net/Demo/vast_inspector/android.mp4', type='video/mp4') 
+                                video-component( ref="video", v-bind:playing="playing", v-bind:muted="isMuted", v-bind:seek-to="seekTo", v-bind:volume="volume",  v-on:loadstart="loadstart", v-on:canplay="canplay($event)", v-on:seeking="seeking()", v-on:seeked="seeked()", v-on:ended="ended()",  v-on:timeupdate="timeupdate")
                                 //comment
                                 div.video-player__comment
                                     div.feedback.clearfix
@@ -28,21 +25,19 @@ html(itemscope,itemtype="http://schema.org/Article")
                             div.video-player__timeline(ref="timelineBar", @mousedown="startDrag($event)", @touchstart="startDrag($event)", @mousemove="onDrag", @touchmove="onDrag",@mouseup="stopDrag", @touchend="stopDrag", @mouseleave="stopDrag")
                                 div.video-player__canplay(ref="canplayBar")
                                 div.video-player__progress(ref="progressBar", v-bind:style="{width: computedTimeline  + '%'}")
-                                div.video-player__slider(ref="sliderBar",  v-show ="isDrag", v-bind:style="{width: ( isDrag ? computedDragOffsetX : 0 )+ '%'}")
+                                div.video-player__slider(ref="sliderBar",  v-show ="isDrag || isSeeking", v-bind:style="{width: ( computedDragOffsetX )+ '%'}")
                                     div.video-player__seek-time.tipinfo
-                                        div.tipinfo__content {{ formatSeekTime }}
+                                        div.tipinfo__content {{ seekDisplayTime | formatVideoTime }}
                             //ctrls
                             div.video-player__ctrls
-                                div.video-player__ctrl.video-player__play-btn(@click="play($event)") {{UIplayBtn}}
-                                div.video-player__ctrl.video-player__time-display {{formatCurrentTime}} / {{formatDurationTime}}
-                                div.video-player__ctrl.video-palyer__volume(@click="muted($event)") 音量{{isMuted}}
+                                div.video-player__ctrl.video-player__play-btn(@click="tooglePlay($event)") {{playBtnText}}
+                                div.video-player__ctrl.video-player__time-display {{currentTime | formatVideoTime }} / {{duration | formatVideoTime }}
+                                div.video-player__ctrl.video-palyer__volume(@click="muted($event)") 音量{{mutedDisplay}}
                                     div.video-player__mute
                                 div.video-player__volume__ctrls
                                     div.volume__bar
-                                        input(type="range", min="0", max="100", v-model="volume", step="1")
+                                        input(type="range", min="0", max="1", v-model.number="volume", step="0.01")
 
-                                //- div.video-player__ctrl.video-player__feedback 留言
-                                //- div.video-player__ctrl.video-player__settings 設定
                             //display feedback
                             div.video-player__feedback-display
                                 div.feedback.feedback--box.clearfix
@@ -54,6 +49,9 @@ html(itemscope,itemtype="http://schema.org/Article")
                 div.l-container
 
             div.fb-root
+        
+        script(type="text/x-template", id="video-component")
+            include _video-component.jade
+        script(src="js/lib/date.js")
+        script(src="js/app2.js")
 
-        <script src="js/lib/date.js"></script>
-        <script src="js/app.js"></script>

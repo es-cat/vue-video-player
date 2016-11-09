@@ -1,0 +1,5 @@
+div
+    video(width='50%', ref="videoA", v-on:canplay='canplay($event,canplayDefs[0])', v-on:timeupdate='timeupdate', v-on:pause='pause($event,pauseDefs[0])', v-on:seeking='seeking($event,seekingDefs[0])',  v-on:seeked='seeked($event,seekedDefs[0])', v-on:loadstart='loadstart($event,loadstartDefs[0])', v-on:ended='ended($event,endedDefs[0])' )
+        source(src='http://clips.vorwaerts-gmbh.de/VfE_html5.mp4', autoplay, type='video/mp4')
+    video(width='50%', ref="videoB", v-on:canplay='canplay($event,canplayDefs[1])', v-on:timeupdate='timeupdate', v-on:pause='pause($event,pauseDefs[1])', v-on:seeking='seeking($event,seekingDefs[1])',  v-on:seeked='seeked($event,seekedDefs[1])', v-on:loadstart='loadstart($event,loadstartDefs[1])', v-on:ended='ended($event,endedDefs[1])' )
+        source(src='http://rmcdn.2mdn.net/Demo/vast_inspector/android.mp4', type='video/mp4') 

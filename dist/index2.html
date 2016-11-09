@@ -36,9 +36,7 @@
               <!--viewer-->
               <div class="video-player__viewer">
                 <div v-show="isLoading" class="video-player__loading">讀取中…</div>
-                <video width="100%" ref="video" id="video1" autoplay v-on:timeupdate="timeupdate" v-on:loadstart="loadstart($event)" v-on:canplay="canplay($event)" v-on:seeking="seeking($event)" v-on:seeked="seeked($event)">
-                  <source src="http://rmcdn.2mdn.net/Demo/vast_inspector/android.mp4" type="video/mp4">
-                </video>
+                <video-component ref="video" v-bind:playing="playing" v-bind:muted="isMuted" v-bind:seek-to="seekTo" v-bind:volume="volume" v-on:loadstart="loadstart" v-on:canplay="canplay($event)" v-on:seeking="seeking()" v-on:seeked="seeked()" v-on:ended="ended()" v-on:timeupdate="timeupdate"></video-component>
                 <!--comment-->
                 <div class="video-player__comment">
                   <div class="feedback clearfix"><img src="https://dummyimage.com/400x400/000/fff" alt="user名字" class="feedback__avater feedback__avater--small">
@@ -55,22 +53,22 @@
               <div ref="timelineBar" @mousedown="startDrag($event)" @touchstart="startDrag($event)" @mousemove="onDrag" @touchmove="onDrag" @mouseup="stopDrag" @touchend="stopDrag" @mouseleave="stopDrag" class="video-player__timeline">
                 <div ref="canplayBar" class="video-player__canplay"></div>
                 <div ref="progressBar" v-bind:style="{width: computedTimeline  + '%'}" class="video-player__progress"></div>
-                <div ref="sliderBar" v-show="isDrag" v-bind:style="{width: ( isDrag ? computedDragOffsetX : 0 )+ '%'}" class="video-player__slider">
+                <div ref="sliderBar" v-show="isDrag || isSeeking" v-bind:style="{width: ( computedDragOffsetX )+ '%'}" class="video-player__slider">
                   <div class="video-player__seek-time tipinfo">
-                    <div class="tipinfo__content">{{ formatSeekTime }}</div>
+                    <div class="tipinfo__content">{{ seekDisplayTime | formatVideoTime }}</div>
                   </div>
                 </div>
               </div>
               <!--ctrls-->
               <div class="video-player__ctrls">
-                <div @click="play($event)" class="video-player__ctrl video-player__play-btn">{{UIplayBtn}}</div>
-                <div class="video-player__ctrl video-player__time-display">{{formatCurrentTime}} / {{formatDurationTime}}</div>
-                <div @click="muted($event)" class="video-player__ctrl video-palyer__volume">音量{{isMuted}}
+                <div @click="tooglePlay($event)" class="video-player__ctrl video-player__play-btn">{{playBtnText}}</div>
+                <div class="video-player__ctrl video-player__time-display">{{currentTime | formatVideoTime }} / {{duration | formatVideoTime }}</div>
+                <div @click="muted($event)" class="video-player__ctrl video-palyer__volume">音量{{mutedDisplay}}
                   <div class="video-player__mute"></div>
                 </div>
                 <div class="video-player__volume__ctrls">
                   <div class="volume__bar">
-                    <input type="range" min="0" max="100" v-model="volume" step="1">
+                    <input type="range" min="0" max="1" v-model.number="volume" step="0.01">
                   </div>
                 </div>
               </div>
@@ -91,7 +89,18 @@
         <div class="l-container"></div>
       </div>
       <div class="fb-root"></div>
-    </div><script src="js/lib/date.js"></script>
-    <script src="js/app.js"></script>
+    </div>
+    <script type="text/x-template" id="video-component">
+      <div>
+        <video width="50%" ref="videoA" v-on:canplay="canplay($event,canplayDefs[0])" v-on:timeupdate="timeupdate" v-on:pause="pause($event,pauseDefs[0])" v-on:seeking="seeking($event,seekingDefs[0])" v-on:seeked="seeked($event,seekedDefs[0])" v-on:loadstart="loadstart($event,loadstartDefs[0])" v-on:ended="ended($event,endedDefs[0])">
+          <source src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" autoplay type="video/mp4">
+        </video>
+        <video width="50%" ref="videoB" v-on:canplay="canplay($event,canplayDefs[1])" v-on:timeupdate="timeupdate" v-on:pause="pause($event,pauseDefs[1])" v-on:seeking="seeking($event,seekingDefs[1])" v-on:seeked="seeked($event,seekedDefs[1])" v-on:loadstart="loadstart($event,loadstartDefs[1])" v-on:ended="ended($event,endedDefs[1])">
+          <source src="http://rmcdn.2mdn.net/Demo/vast_inspector/android.mp4" type="video/mp4">
+        </video>
+      </div>
+    </script>
+    <script src="js/lib/date.js"></script>
+    <script src="js/app2.js"></script>
   </body>
 </html>
