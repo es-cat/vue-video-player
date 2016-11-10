@@ -155,7 +155,8 @@ html, body {
   font-smoothing: antialiased; }
 
 body {
-  background: #eee; }
+  background: #eee;
+  width: 100%; }
 
 .feedback__avater {
   border-radius: 50%;

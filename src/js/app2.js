@@ -126,17 +126,7 @@
                 if (def !== undefined) {
                     def.resolve(e);
                 }
-            },
-            ended: function(e, def) {
-                if (def !== undefined) {
-                    def.resolve(e);
-                }
-                this.$emit('ended', def);
-            }
-        },
-        created: function() {
-            var _this = this;
-            //同步讀取開始
+            },  
             $.when(_this.loadstartDefs[0], _this.loadstartDefs[1]).done(function(task1, task2) {
                 _this.$emit('loadstart', task1, task2);
             });
