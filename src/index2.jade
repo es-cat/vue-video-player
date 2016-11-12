@@ -12,7 +12,7 @@ html(itemscope,itemtype="http://schema.org/Article")
                             //viewer
                             div.video-player__viewer
                                 div.video-player__loading( v-show ="isLoading" ) 讀取中…
-                                video-component( ref="video", v-bind:playing="playing", v-bind:muted="isMuted", v-bind:seek-to="seekTo", v-bind:volume="volume",  v-on:loadstart="loadstart", v-on:canplay="canplay($event)", v-on:seeking="seeking()", v-on:seeked="seeked()", v-on:ended="ended()",  v-on:timeupdate="timeupdate")
+                                video-component( ref="video", v-bind:playing="playing", v-bind:muted="isMuted", v-bind:seek-to="seekTo", v-bind:volume="volume",  v-on:loadstart="loadstart", v-on:canplay="canplay($event)", v-on:seeking="seeking()", v-on:seeked="seeked()", v-on:ended="ended",  v-on:timeupdate="timeupdate")
                                 //comment
                                 div.video-player__comment
                                     div.feedback.clearfix

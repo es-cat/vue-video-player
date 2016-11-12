@@ -24,7 +24,7 @@
               <!--viewer-->
               <div class="video-player__viewer">
                 <div v-show="isLoading" class="video-player__loading">讀取中…</div>
-                <video-component ref="video" v-bind:playing="playing" v-bind:muted="isMuted" v-bind:seek-to="seekTo" v-bind:volume="volume" v-on:loadstart="loadstart" v-on:canplay="canplay($event)" v-on:seeking="seeking()" v-on:seeked="seeked()" v-on:ended="ended()" v-on:timeupdate="timeupdate"></video-component>
+                <video-component ref="video" v-bind:playing="playing" v-bind:muted="isMuted" v-bind:seek-to="seekTo" v-bind:volume="volume" v-on:loadstart="loadstart" v-on:canplay="canplay($event)" v-on:seeking="seeking()" v-on:seeked="seeked()" v-on:ended="ended" v-on:timeupdate="timeupdate"></video-component>
                 <!--comment-->
                 <div class="video-player__comment">
                   <div class="feedback clearfix"><img src="https://dummyimage.com/400x400/000/fff" alt="user名字" class="feedback__avater feedback__avater--small">

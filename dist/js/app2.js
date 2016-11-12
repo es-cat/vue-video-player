@@ -45,15 +45,14 @@
                 duration: 0
             }
         },
-        computed: function() {
-
-        },
+        computed: {},
         watch: {
             playing: function(nextState) {
 
                 var _this = this;
                 var videoA = _this.$refs.videoA;
                 var videoB = _this.$refs.videoB;
+
 
                 if (nextState) {
                     videoA.play();
@@ -65,24 +64,20 @@
 
             },
             seekTo: function(newValue) {
-
                 var _this = this;
                 var videoA = _this.$refs.videoA;
                 var videoB = _this.$refs.videoB;
 
                 videoA.currentTime = newValue;
                 videoB.currentTime = newValue;
-
             },
             muted: function(newValue) {
-                console.log(newValue);
                 var _this = this;
                 var videoA = _this.$refs.videoA;
                 var videoB = _this.$refs.videoB;
 
                 videoA.muted = newValue;
                 videoB.muted = newValue;
-
             },
             volume: function(newValue) {
                 // console.log(newValue);
@@ -103,9 +98,9 @@
                 if (_this.$refs.videoA.currentTime - _this.$refs.videoB.currentTime > 0.1) {
                     _this.$refs.videoA.currentTime = _this.$refs.videoB.currentTime;
                 }
+
                 _this.currentTime = _this.$refs.videoA.currentTime;
                 _this.$emit('timeupdate', _this.currentTime);
-
             },
             pause: function(e, def) {
                 if (def !== undefined) {
@@ -126,6 +121,22 @@
                 if (def !== undefined) {
                     def.resolve(e);
                 }
+            },
+            ended: function(e, def) {
+                var _this = this;
+                if (def !== undefined) {
+                    def.resolve(e);
+                }
+                _this.$refs.videoA.pause();
+                _this.$refs.videoB.pause();
+
+
+                _this.$refs.videoA.currentTime = 0;
+                _this.$refs.videoB.currentTime = 0;
+
+                //防呆，為避免有影片的長短不一致，一豆有影片播放完，便當完成播放
+                _this.$emit('ended');
+
             }
         },
         created: function() {
@@ -137,11 +148,9 @@
 
             //同步讀取開始
             $.when(_this.canplayDefs[0], _this.canplayDefs[1]).done(function(event1, event2) {
+                //防呆：為避免影片長度不一致，選擇短的那個當作播放長度
                 _this.duration = Math.min(_this.$refs.videoA.duration, _this.$refs.videoB.duration);
                 _this.$emit('canplay', _this.duration);
-                // console.log('canplay');
-                // console.log(_this.$refs.videoA.duration);
-                // console.log(_this.$refs.videoB.duration);
             });
 
             //同步暫停
@@ -149,10 +158,10 @@
                 _this.$emit('pause', task1, task2);
             });
 
-            //同步播完
-            $.when(_this.endedDefs[0], _this.endedDefs[1]).done(function(task1, task2) {
-                // _this.$emit('ended',task1, task2);
-            });
+            //同步播完：暫時沒用到，也許可以設定prop來決定要不要強制同步
+            // $.when(_this.endedDefs[0], _this.endedDefs[1]).done(function(task1, task2) {
+            //     _this.$emit('ended',task1, task2);
+            // });
 
             //同步緩存
 
@@ -259,7 +268,6 @@
                     _this.seekDisplayTime = _this.computedDragOffsetX / 100 * _this.duration;
 
                 }
-
             },
             onDrag: function(e) {
                 e.preventDefault();
