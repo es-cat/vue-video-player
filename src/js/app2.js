@@ -126,7 +126,11 @@
                 if (def !== undefined) {
                     def.resolve(e);
                 }
-            },  
+            }
+        },
+        created: function() {
+
+            var _this = this;
             $.when(_this.loadstartDefs[0], _this.loadstartDefs[1]).done(function(task1, task2) {
                 _this.$emit('loadstart', task1, task2);
             });
