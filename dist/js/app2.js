@@ -23,27 +23,27 @@ var fakeDatas = {
         name: 'lala1',
         photo: 'https://dummyimage.com/400x400/000/fff',
         logTime: 50,
-        content: "使用者不太開心1"
+        content: "留言1"
     }, {
         name: 'lala2',
         photo: 'https://dummyimage.com/400x400/000/fff',
         logTime: 8,
-        content: "使用者不太開心2"
+        content: "留言2"
     }, {
         name: 'lala3',
         photo: 'https://dummyimage.com/400x400/000/fff',
         logTime: 15,
-        content: "使用者不太開心3"
+        content: "留言3"
     }, {
         name: 'lala4',
         photo: 'https://dummyimage.com/400x400/000/fff',
         logTime: 20,
-        content: "使用者不太開心4"
+        content: "留言4"
     }, {
         name: 'lala5',
         photo: 'https://dummyimage.com/400x400/000/fff',
         logTime: 20,
-        content: "使用者不太開心4"
+        content: "留言5"
     }]
 };
 
@@ -416,6 +416,8 @@ var app = new Vue({
         saveComment: function(e) {
             e.preventDefault();
 
+            this.playing = true;
+            
             var _this = this;
             var comment = $.extend({}, _this.feedback);
             //模擬save
@@ -435,7 +437,6 @@ var app = new Vue({
 
         },
         feedbackBlur: function(e) {
-            this.playing = true;
         }
     },
     created: function() {
