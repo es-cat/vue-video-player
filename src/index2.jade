@@ -13,38 +13,41 @@ html(itemscope,itemtype="http://schema.org/Article")
                             div.video-player__viewer
                                 div.video-player__loading( v-show ="isLoading" ) 讀取中…
                                 video-component( ref="video", v-bind:playing="playing", v-bind:muted="isMuted", v-bind:seek-to="seekTo", v-bind:volume="volume",  v-on:loadstart="loadstart", v-on:canplay="canplay($event)", v-on:seeking="seeking()", v-on:seeked="seeked()", v-on:ended="ended",  v-on:timeupdate="timeupdate")
-                                //comment
-                                div.video-player__comment
-                                    div.feedback.clearfix
-                                        img.feedback__avater.feedback__avater--small(src="https://dummyimage.com/400x400/000/fff", alt="user名字")
-                                        div.feedback__content
-                                            form.feedback__form(id="")
-                                                textarea
-                                                button 送出
                             //timeline
-                            div.video-player__timeline(ref="timelineBar", @mousedown="startDrag($event)", @touchstart="startDrag($event)", @mousemove="onDrag", @touchmove="onDrag",@mouseup="stopDrag", @touchend="stopDrag", @mouseleave="stopDrag")
-                                div.video-player__canplay(ref="canplayBar")
+                            div.video-player__timeline( ref="timelineBar", @mousedown="startDrag($event)", @touchstart="startDrag($event)", @mousemove="onDrag", @touchmove="onDrag",@mouseup="stopDrag", @touchend="stopDrag", @mouseleave="stopDrag" )
+                                div.video-player__canplay( ref="canplayBar" )
+                                div.video-player__logs
                                 div.video-player__progress(ref="progressBar", v-bind:style="{width: computedTimeline  + '%'}")
-                                div.video-player__slider(ref="sliderBar",  v-show ="isDrag || isSeeking", v-bind:style="{width: ( computedDragOffsetX )+ '%'}")
+                                div.video-player__slider( ref="sliderBar",  v-show ="isDrag || isSeeking", v-bind:style="{width: ( computedDragOffsetX )+ '%'}" )
                                     div.video-player__seek-time.tipinfo
                                         div.tipinfo__content {{ seekDisplayTime | formatVideoTime }}
                             //ctrls
                             div.video-player__ctrls
-                                div.video-player__ctrl.video-player__play-btn(@click="tooglePlay($event)") {{playBtnText}}
+                                div.video-player__ctrl.video-player__play-btn( @click="tooglePlay($event)" ) {{playBtnText}}
                                 div.video-player__ctrl.video-player__time-display {{currentTime | formatVideoTime }} / {{duration | formatVideoTime }}
-                                div.video-player__ctrl.video-palyer__volume(@click="muted($event)") 音量{{mutedDisplay}}
+                                div.video-player__ctrl.video-palyer__volume( @click="muted($event)" ) 音量{{mutedDisplay}}
                                     div.video-player__mute
                                 div.video-player__volume__ctrls
                                     div.volume__bar
-                                        input(type="range", min="0", max="1", v-model.number="volume", step="0.01")
-
+                                        input( type="range", min="0", max="1", v-model.number="volume", step="0.01" )
+                            
                             //display feedback
                             div.video-player__feedback-display
-                                div.feedback.feedback--box.clearfix
-                                    img.feedback__avater(src="https://dummyimage.com/400x400/000/fff", alt="user名字")
+                                feedback-display-component( v-bind:feedbacks="feedbacks", v-bind:current-time="currentTime", show-type="pop")
+
+                            //comment
+                            div.video-player__comment
+                                div.feedback.clearfix
+                                    img.feedback__avater.feedback__avater--small(src="https://dummyimage.com/400x400/000/fff", alt="user名字")
                                     div.feedback__content
-                                        div.feedback__info 時間 名字等資訊
-                                        div.feedback__content 內容
+                                        form.feedback__form()
+                                            textarea(v-model="feedback.content", v-on:focus="feedbackFocus($event)", v-on:blur="feedbackBlur($event)")
+                                            button(v-on:click="saveComment($event)") 送出
+                            //loglist
+                            div.logs-list
+                                feedback-display-component( v-bind:feedbacks="feedbacks", v-bind:current-time="currentTime", show-type="list")
+
+
             div.l-footer.footer
                 div.l-container
 
@@ -52,6 +55,8 @@ html(itemscope,itemtype="http://schema.org/Article")
         
         script(type="text/x-template", id="video-component")
             include _video-component.jade
+        script(type="text/x-template", id="feedback-display-component")
+            include _feedback-display-component.jade
         script(src="js/lib/date.js")
         script(src="js/app2.js")
 

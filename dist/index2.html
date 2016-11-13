@@ -5,7 +5,8 @@
   <title>vue影片播放器</title>
   <meta name="description" content="認真的練習">
   <meta name="viewport" content="width=device-width, initial-scale=1.0 ,shrink-to-fit=no">
-  <link rel="stylesheet" href="css/main.css"><script src="js/mobile-detect.min.js"></script>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css"><script src="js/mobile-detect.min.js"></script>
   <script src="js/jquery.min.js"></script>
   <script src="js/fd.comp.oldBrowserAlert.js"></script>
   <script src="js/TweenMax.min.js"></script>
@@ -25,21 +26,11 @@
               <div class="video-player__viewer">
                 <div v-show="isLoading" class="video-player__loading">讀取中…</div>
                 <video-component ref="video" v-bind:playing="playing" v-bind:muted="isMuted" v-bind:seek-to="seekTo" v-bind:volume="volume" v-on:loadstart="loadstart" v-on:canplay="canplay($event)" v-on:seeking="seeking()" v-on:seeked="seeked()" v-on:ended="ended" v-on:timeupdate="timeupdate"></video-component>
-                <!--comment-->
-                <div class="video-player__comment">
-                  <div class="feedback clearfix"><img src="https://dummyimage.com/400x400/000/fff" alt="user名字" class="feedback__avater feedback__avater--small">
-                    <div class="feedback__content">
-                      <form id="" class="feedback__form">
-                        <textarea></textarea>
-                        <button>送出</button>
-                      </form>
-                    </div>
-                  </div>
-                </div>
               </div>
               <!--timeline-->
               <div ref="timelineBar" @mousedown="startDrag($event)" @touchstart="startDrag($event)" @mousemove="onDrag" @touchmove="onDrag" @mouseup="stopDrag" @touchend="stopDrag" @mouseleave="stopDrag" class="video-player__timeline">
                 <div ref="canplayBar" class="video-player__canplay"></div>
+                <div class="video-player__logs"></div>
                 <div ref="progressBar" v-bind:style="{width: computedTimeline  + '%'}" class="video-player__progress"></div>
                 <div ref="sliderBar" v-show="isDrag || isSeeking" v-bind:style="{width: ( computedDragOffsetX )+ '%'}" class="video-player__slider">
                   <div class="video-player__seek-time tipinfo">
@@ -62,12 +53,22 @@
               </div>
               <!--display feedback-->
               <div class="video-player__feedback-display">
-                <div class="feedback feedback--box clearfix"><img src="https://dummyimage.com/400x400/000/fff" alt="user名字" class="feedback__avater">
+                <feedback-display-component v-bind:feedbacks="feedbacks" v-bind:current-time="currentTime" show-type="pop"></feedback-display-component>
+              </div>
+              <!--comment-->
+              <div class="video-player__comment">
+                <div class="feedback clearfix"><img src="https://dummyimage.com/400x400/000/fff" alt="user名字" class="feedback__avater feedback__avater--small">
                   <div class="feedback__content">
-                    <div class="feedback__info">時間 名字等資訊</div>
-                    <div class="feedback__content">內容</div>
+                    <form class="feedback__form">
+                      <textarea v-model="feedback.content" v-on:focus="feedbackFocus($event)" v-on:blur="feedbackBlur($event)"></textarea>
+                      <button v-on:click="saveComment($event)">送出</button>
+                    </form>
                   </div>
                 </div>
+              </div>
+              <!--loglist-->
+              <div class="logs-list">
+                <feedback-display-component v-bind:feedbacks="feedbacks" v-bind:current-time="currentTime" show-type="list"></feedback-display-component>
               </div>
             </div>
           </div>
@@ -86,6 +87,21 @@
         <video width="50%" ref="videoB" v-on:canplay="canplay($event,canplayDefs[1])" v-on:timeupdate="timeupdate" v-on:pause="pause($event,pauseDefs[1])" v-on:seeking="seeking($event,seekingDefs[1])" v-on:seeked="seeked($event,seekedDefs[1])" v-on:loadstart="loadstart($event,loadstartDefs[1])" v-on:ended="ended($event,endedDefs[1])">
           <source src="http://rmcdn.2mdn.net/Demo/vast_inspector/android.mp4" type="video/mp4">
         </video>
+      </div>
+    </script>
+    <script type="text/x-template" id="feedback-display-component">
+      <div class="feedback">
+        <!--時間相同，可以是list-->
+        <div v-for="(logs,logskey) in indexDatas" v-bind:key="logskey">
+          <transition-group name="custom-classes-transition" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" tag="div">
+            <div v-show=" showType == 'list' || (log.logTime &lt;= (currentTime + 3) &amp;&amp; log.logTime &gt;= (currentTime - 0.5))" v-for="(log,logkey) in logs" v-bind:key="logskey" class="feedback__box clearfix"><img v-bind:src="log.photo" v-bind:alt="log.name" class="feedback__avater">
+              <div class="feedback__content">
+                <div class="feedback__info">{{log.logTime | formatVideoTime }} {{log.name}}</div>
+                <div class="feedback__content">{{log.content}} ----- {{logskey}}----{{logkey}}</div>
+              </div>
+            </div>
+          </transition-group>
+        </div>
       </div>
     </script>
     <script src="js/lib/date.js"></script>

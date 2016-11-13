@@ -20,7 +20,7 @@
 // @import "components/_load.scss"; //html 在 load.js 裡
 // //6.pages
 // //7.themes
-body {
+body,html {
     background: #eee;
     width: 100%;
 }
@@ -35,15 +35,17 @@ body {
             width: 100%;
         }
         &--small {
-            height: 30px;
-            width: 30px;
+            height: 60px;
+            width: 60px;
         }
     }
     &__content {
         overflow: hidden;
+        padding: 0 10px;
     }
     &__form {
         padding: 5px;
+        vertical-align: middle;
         textarea {
             display: inline-block;
         }
@@ -51,21 +53,28 @@ body {
             display: inline-block;
         }
     }
-    &--box {
+    &__info {
+    }
+    &__box {
         border-radius: 10px;
         background: #fff;
         box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
-        padding: 5px;
+        padding: 10px;
+        line-height: 1.5;
+        margin-bottom: 20px;
     }
 }
 
 .video-player {
     $h: 15px;
-    width: 800px;
+    width: 1000px;
     margin: 0 auto;
+    &__container {
+        position: relative;
+    }
     &__comment,
     &__feedback-display {
-        display: none;
+        // display: none;
     }
     &__feedback-display {
         position: absolute;
@@ -74,19 +83,46 @@ body {
         left: 10px;
     }
     &__comment {
-        position: absolute;
+        // position: absolute;
         width: 100%;
         bottom: 10px;
         .feedback {
-            width: 60%;
-            margin: 0 auto;
+            // width: 60%;
+            margin: 20px auto;
+            border-radius: 10px;
+            // background: #fff;
+            // box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            textarea {
+                width: 60%;
+                height: 50px;
+                float: left;
+                margin: 0 10px;
+            }
+            button {
+                background: #00d194;
+                border-radius: 15px;
+                font-size: 18px;
+                line-height: 24px;
+                vertical-align: middle;
+                float: left;
+                width: 100px;
+                padding: 5px;
+                border: 0;
+
+            }
         }
     }
     &__viewer {
         position: relative;
         text-align: center;
+        background: #000;
+        padding-right: 300px;
         video {
             display: inline-block;
+            width: 49%;
+            min-height: 600px;
+            background: #000;
         }
     }
     &__loading {
@@ -125,18 +161,6 @@ body {
         border-right: 1px solid rgba(255, 255, 255, 0.75);
         cursor: pointer;
         z-index: 0;
-        // &:before {
-        //     cursor: pointer;
-        //     border-radius: 50%;
-        //     background: #fff;
-        //     position: absolute;
-        //     top: #{$h/2*-0.95};
-        //     right: #{$h/4*-1.05};
-        //     content: '.';
-        //     width: $h/2;
-        //     height: $h/2;
-        //     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-        // }
     }
     &__slider {
         box-sizing: border-box;
@@ -187,6 +211,18 @@ body {
         width: 100px;
       }
     }
+}
+
+.logs-list {
+    background: #000;
+    height: 600px;
+    overflow-y:auto; 
+    width: 300px;
+    position: absolute;
+    right: 0px;
+    top:0;
+    padding: 10px;
+    box-sizing:border-box;
 }
 
 
