@@ -3,9 +3,9 @@ var app = {};
 //全域事件的中繼器詳情可參考
 //https://vuejs.org/v2/guide/migration.html#dispatch-and-broadcast-replaced
 var eventHub = new Vue();
+
 var mixin = {
-    created: function() {
-    },
+    created: function() {},
     data: function() {
         return {}
     },
@@ -46,14 +46,11 @@ var fakeDatas = {
     }]
 };
 
-
-
-
 Vue.filter('formatVideoTime', function(time) {
     return (new Date).clearTime().addSeconds(time).toString('H:mm:ss');
 });
 
-//動畫處理的不夠細
+//動畫處理的不夠細：要寫cancelled的部份
 Vue.component('transition-staggered-fade', {
     template: '\
     <transition-group\
@@ -84,8 +81,8 @@ Vue.component('transition-staggered-fade', {
         leave: function(el, done) {
             console.log('leave');
         },
-        afterLeave: function(el, done) { 
-            console.log('afterLeave'); 
+        afterLeave: function(el, done) {
+            console.log('afterLeave');
 
         },
         leaveCancelled: function(el, done) {}
@@ -201,7 +198,7 @@ Vue.component('videoComponent', {
         },
         ended: function(e, def) {
             var _this = this;
-            
+
             if (def !== undefined) {
                 def.resolve(e);
             }
@@ -212,7 +209,7 @@ Vue.component('videoComponent', {
             _this.$refs.videoA.currentTime = 0;
             _this.$refs.videoB.currentTime = 0;
 
-            //防呆，為避免有影片的長短不一致，一豆有影片播放完，便當完成播放
+            //防呆，為避免有影片的長短不一致，一但有影片播放完，便當完成播放
             _this.$emit('ended');
         }
     },
@@ -241,6 +238,7 @@ Vue.component('videoComponent', {
         // });
 
         //同步緩存
+        //綏存改天再寫
 
         //同步seeking
         $.when(_this.seekingDefs[0], _this.seekingDefs[1]).done(function(task1, task2) {
@@ -397,6 +395,7 @@ var app = new Vue({
         },
         onDrag: function(e) {
             e.preventDefault();
+
             var _this = this;
             if (_this.isDrag) {
                 _this.dragX = e.offsetX;
@@ -404,24 +403,25 @@ var app = new Vue({
             }
         },
         stopDrag: function(e) {
-            var _this = this;
             e.preventDefault();
+
+            var _this = this;
             _this.isDrag = false;
             _this.seekTo = _this.seekDisplayTime;
         },
         saveComment: function(e) {
             e.preventDefault();
 
-            this.playing = true;
-
             var _this = this;
             var comment = $.extend({}, _this.feedback);
+
+            _this.playing = true;
+
             //模擬save
             setTimeout(function() {
                 _this.feedbacks.push(comment);
                 _this.feedback.content = "";
                 eventHub.$emit('saveComment', comment);
-
             }, 1000);
         },
         feedbackFocus: function(e) {
@@ -429,8 +429,7 @@ var app = new Vue({
             this.feedback.logTime = this.currentTime;
 
         },
-        feedbackBlur: function(e) {
-        }
+        feedbackBlur: function(e) {}
     },
     created: function() {
         //這裡可以初始化使用者名稱
