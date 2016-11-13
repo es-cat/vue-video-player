@@ -98,7 +98,7 @@
         <!--時間相同，可以是list-->
         <div v-for="(logs,logskey) in indexDatas" v-bind:key="logskey">
           <transition-staggered-fade>
-            <div v-show="showType == 'list' ||(log.logTime &lt;= (currentTime + 0.5) &amp;&amp; log.logTime &gt;= (currentTime - 0.5))" v-for="(log,logkey) in logs" v-bind:key="logskey" class="feedback__box">
+            <div v-show="showType == 'list' ||(log.logTime &lt;= (currentTime + 0.5) &amp;&amp; log.logTime &gt;= (currentTime - 0.5))" v-for="(log,logkey) in logs" v-bind:key="logskey" v-bind:data-index="logkey" class="feedback__box">
               <div class="feedback__box__inner clearfix"><img v-bind:src="log.photo" v-bind:alt="log.name" class="feedback__avater">
                 <div class="feedback__content">
                   <div class="feedback__info">{{log.logTime | formatVideoTime }} {{log.name}}</div>
