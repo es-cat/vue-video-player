@@ -16,14 +16,14 @@ html(itemscope,itemtype="http://schema.org/Article")
                                 //-     source(src='http://clips.vorwaerts-gmbh.de/VfE_html5.mp4', type='video/mp4')
                                 video(width='100%',ref="video",id="video1", autoplay, v-on:timeupdate='timeupdate', v-on:loadstart='loadstart($event)', v-on:canplay='canplay($event)', v-on:seeking='seeking($event)', v-on:seeked='seeked($event)')
                                     source(src='http://rmcdn.2mdn.net/Demo/vast_inspector/android.mp4', type='video/mp4') 
-                                //comment
-                                div.video-player__comment
-                                    div.feedback.clearfix
-                                        img.feedback__avater.feedback__avater--small(src="https://dummyimage.com/400x400/000/fff", alt="user名字")
-                                        div.feedback__content
-                                            form.feedback__form(id="")
-                                                textarea
-                                                button 送出
+                                //- //comment
+                                //- div.video-player__comment
+                                //-     div.feedback.clearfix
+                                //-         img.feedback__avater.feedback__avater--small(src="https://dummyimage.com/400x400/000/fff", alt="user名字")
+                                //-         div.feedback__content
+                                //-             form.feedback__form(id="")
+                                //-                 textarea
+                                //-                 button 送出
                             //timeline
                             div.video-player__timeline(ref="timelineBar", @mousedown="startDrag($event)", @touchstart="startDrag($event)", @mousemove="onDrag", @touchmove="onDrag",@mouseup="stopDrag", @touchend="stopDrag", @mouseleave="stopDrag")
                                 div.video-player__canplay(ref="canplayBar")
@@ -43,13 +43,13 @@ html(itemscope,itemtype="http://schema.org/Article")
 
                                 //- div.video-player__ctrl.video-player__feedback 留言
                                 //- div.video-player__ctrl.video-player__settings 設定
-                            //display feedback
-                            div.video-player__feedback-display
-                                div.feedback.feedback--box.clearfix
-                                    img.feedback__avater(src="https://dummyimage.com/400x400/000/fff", alt="user名字")
-                                    div.feedback__content
-                                        div.feedback__info 時間 名字等資訊
-                                        div.feedback__content 內容
+                            //- //display feedback
+                            //- div.video-player__feedback-display
+                            //-     div.feedback.feedback--box.clearfix
+                            //-         img.feedback__avater(src="https://dummyimage.com/400x400/000/fff", alt="user名字")
+                            //-         div.feedback__content
+                            //-             div.feedback__info 時間 名字等資訊
+                            //-             div.feedback__content 內容
             div.l-footer.footer
                 div.l-container
 

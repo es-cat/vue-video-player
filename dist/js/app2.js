@@ -16,6 +16,8 @@ var mixin = {
     }
 };
 
+TweenMax.lagSmoothing(0);
+
 var fakeDatas = {
     feedbacks: [{
         name: 'lala1',
@@ -85,7 +87,7 @@ Vue.component('transition-staggered-fade', {
         },
         afterLeave: function(el, done) { 
             console.log('afterLeave'); 
-            
+
         },
         leaveCancelled: function(el, done) {}
     }
