@@ -68,22 +68,20 @@ Vue.component('transition-staggered-fade', {
     ',
     methods: {
         beforeEnter: function(el, done) {
-            console.log('beforeEnter');
-            TweenMax.fromTo(el, 0.3, { opacity: 0, height: 0 }, { opacity: 1, height: 'auto', ease: Back.easeOut.config(2), onComplete: done });
+            var delay = 0 + el.dataset.index * 0.25;
+            TweenMax.fromTo(el, 0.6, { opacity: 0, height: 0 }, { opacity: 1, height: 'auto', onComplete: done }).delay(delay);
         },
         enter: function(el, done) {
-            console.log('enter');
         },
         enterCancelled: function(el, done) {
         },
         beforeLeave: function(el, done) {
-            TweenMax.fromTo(el, 0.3, { opacity: 1, height: 'auto' }, { opacity: 0, height: 0, ease: Back.easeOut.config(2), onComplete: done, delay: 4 });
+            var delay = 2 + el.dataset.index * 0.25;
+            TweenMax.fromTo(el, 0.6, { opacity: 1, height: 'auto' }, { opacity: 0, height: 0, onComplete: done }).delay(delay);
         },
         leave: function(el, done) {
-            console.log('leave');
         },
         afterLeave: function(el, done) {
-            console.log('afterLeave');
         },
         leaveCancelled: function(el, done) {
         }
