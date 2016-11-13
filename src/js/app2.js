@@ -5,7 +5,6 @@ var app = {};
 var eventHub = new Vue();
 var mixin = {
     created: function() {
-
     },
     data: function() {
         return {}
@@ -54,6 +53,7 @@ Vue.filter('formatVideoTime', function(time) {
     return (new Date).clearTime().addSeconds(time).toString('H:mm:ss');
 });
 
+//動畫處理的不夠細
 Vue.component('transition-staggered-fade', {
     template: '\
     <transition-group\
@@ -73,7 +73,6 @@ Vue.component('transition-staggered-fade', {
         beforeEnter: function(el, done) {
             console.log('beforeEnter');
             TweenMax.fromTo(el, 1, { opacity: 0, height: 0 }, { opacity: 1, height: 'auto', ease: Back.easeOut.config(2), onComplete: done });
-
         },
         enter: function(el, done) {
             console.log('enter');
@@ -202,6 +201,7 @@ Vue.component('videoComponent', {
         },
         ended: function(e, def) {
             var _this = this;
+            
             if (def !== undefined) {
                 def.resolve(e);
             }
@@ -285,8 +285,6 @@ Vue.component('feedbackDisplayComponent', {
             console.log('save a  comment');
             console.log(newValue);
             this.putData(newValue);
-            console.log(this.indexDatas);
-
         }
     },
     created: function() {
@@ -358,7 +356,6 @@ var app = new Vue({
         },
         loadstart: function(time) {
             this.isLoading = true;
-
         },
         canplay: function() {
             this.playing = true;
@@ -396,7 +393,6 @@ var app = new Vue({
             if (_this.isDrag) {
                 _this.dragX = e.offsetX;
                 _this.seekDisplayTime = _this.computedDragOffsetX / 100 * _this.duration;
-
             }
         },
         onDrag: function(e) {
@@ -417,7 +413,7 @@ var app = new Vue({
             e.preventDefault();
 
             this.playing = true;
-            
+
             var _this = this;
             var comment = $.extend({}, _this.feedback);
             //模擬save
@@ -427,9 +423,6 @@ var app = new Vue({
                 eventHub.$emit('saveComment', comment);
 
             }, 1000);
-
-
-
         },
         feedbackFocus: function(e) {
             this.playing = false;
