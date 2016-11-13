@@ -28,17 +28,6 @@
                 <video width="100%" ref="video" id="video1" autoplay v-on:timeupdate="timeupdate" v-on:loadstart="loadstart($event)" v-on:canplay="canplay($event)" v-on:seeking="seeking($event)" v-on:seeked="seeked($event)">
                   <source src="http://rmcdn.2mdn.net/Demo/vast_inspector/android.mp4" type="video/mp4">
                 </video>
-                <!--comment-->
-                <div class="video-player__comment">
-                  <div class="feedback clearfix"><img src="https://dummyimage.com/400x400/000/fff" alt="user名字" class="feedback__avater feedback__avater--small">
-                    <div class="feedback__content">
-                      <form id="" class="feedback__form">
-                        <textarea></textarea>
-                        <button>送出</button>
-                      </form>
-                    </div>
-                  </div>
-                </div>
               </div>
               <!--timeline-->
               <div ref="timelineBar" @mousedown="startDrag($event)" @touchstart="startDrag($event)" @mousemove="onDrag" @touchmove="onDrag" @mouseup="stopDrag" @touchend="stopDrag" @mouseleave="stopDrag" class="video-player__timeline">
@@ -60,15 +49,6 @@
                 <div class="video-player__volume__ctrls">
                   <div class="volume__bar">
                     <input type="range" min="0" max="100" v-model="volume" step="1">
-                  </div>
-                </div>
-              </div>
-              <!--display feedback-->
-              <div class="video-player__feedback-display">
-                <div class="feedback feedback--box clearfix"><img src="https://dummyimage.com/400x400/000/fff" alt="user名字" class="feedback__avater">
-                  <div class="feedback__content">
-                    <div class="feedback__info">時間 名字等資訊</div>
-                    <div class="feedback__content">內容</div>
                   </div>
                 </div>
               </div>
