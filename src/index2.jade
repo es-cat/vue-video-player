@@ -13,14 +13,29 @@ html(itemscope,itemtype="http://schema.org/Article")
                             div.video-player__viewer
                                 div.video-player__loading( v-show ="isLoading" ) 讀取中…
                                 video-component( ref="video", v-bind:playing="playing", v-bind:muted="isMuted", v-bind:seek-to="seekTo", v-bind:volume="volume",  v-on:loadstart="loadstart", v-on:canplay="canplay($event)", v-on:seeking="seeking()", v-on:seeked="seeked()", v-on:ended="ended",  v-on:timeupdate="timeupdate")
+
+                            //display feedback
+                            div.video-player__feedback-display
+                                feedback-display-component( v-bind:feedbacks="feedbacks", v-bind:current-time="currentTime", show-type="pop")
+
+
+                            //loglist
+                            div.logs-list
+                                feedback-display-component( v-bind:feedbacks="feedbacks", v-bind:current-time="currentTime", show-type="list")
+
+
                             //timeline
-                            div.video-player__timeline( ref="timelineBar", @mousedown="startDrag($event)", @touchstart="startDrag($event)", @mousemove="onDrag", @touchmove="onDrag",@mouseup="stopDrag", @touchend="stopDrag", @mouseleave="stopDrag" )
+                            div.video-player__timeline( ref="timelineBar")
                                 div.video-player__canplay( ref="canplayBar" )
-                                div.video-player__logs
                                 div.video-player__progress(ref="progressBar", v-bind:style="{width: computedTimeline  + '%'}")
-                                div.video-player__slider( ref="sliderBar",  v-show ="isDrag || isSeeking", v-bind:style="{width: ( computedDragOffsetX )+ '%'}" )
+                                div.video-player__slider( ref="sliderBar",  v-show ="isDrag || isSeeking", v-bind:style="{ width: ( computedDragOffsetX )+ '%'}" )
                                     div.video-player__seek-time.tipinfo
                                         div.tipinfo__content {{ seekDisplayTime | formatVideoTime }}
+                                //標記有留言的地方
+                                div.video-player__timeline__logs
+                                    div.video-player__timeline__log(v-for="(log,key) in feedbacks", v-bind:key="key", v-bind:style="{left:(Math.floor(log.logTime)/duration)*100 + '%'}")
+                                div.video-player__timeline__dragable( @mousedown="startDrag($event)", @mousemove="onDrag", @mouseup="stopDrag", @mouseleave="stopDrag")
+
                             //ctrls
                             div.video-player__ctrls
                                 div.video-player__ctrl.video-player__play-btn( @click="tooglePlay($event)" ) {{playBtnText}}
@@ -30,10 +45,6 @@ html(itemscope,itemtype="http://schema.org/Article")
                                 div.video-player__volume__ctrls
                                     div.volume__bar
                                         input( type="range", min="0", max="1", v-model.number="volume", step="0.01" )
-                            
-                            //display feedback
-                            div.video-player__feedback-display
-                                feedback-display-component( v-bind:feedbacks="feedbacks", v-bind:current-time="currentTime", show-type="pop")
 
                             //comment
                             div.video-player__comment
@@ -43,9 +54,8 @@ html(itemscope,itemtype="http://schema.org/Article")
                                         form.feedback__form()
                                             textarea(v-model="feedback.content", v-on:focus="feedbackFocus($event)", v-on:blur="feedbackBlur($event)")
                                             button(v-on:click="saveComment($event)") 送出
-                            //loglist
-                            div.logs-list
-                                feedback-display-component( v-bind:feedbacks="feedbacks", v-bind:current-time="currentTime", show-type="list")
+                            
+
 
 
             div.l-footer.footer

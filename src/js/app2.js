@@ -2,7 +2,7 @@ var app = {};
 
 //全域事件的中繼器詳情可參考
 //https://vuejs.org/v2/guide/migration.html#dispatch-and-broadcast-replaced
-var eventHub = new Vue(); 
+var eventHub = new Vue();
 var mixin = {
     created: function() {
 
@@ -50,6 +50,45 @@ var fakeDatas = {
 
 Vue.filter('formatVideoTime', function(time) {
     return (new Date).clearTime().addSeconds(time).toString('H:mm:ss');
+});
+
+Vue.component('transition-staggered-fade', {
+    template: '\
+    <transition-group\
+        tag="div"\
+        v-bind:css="false"\
+        name="staggered-fade"\
+        mode="out-in"\
+        v-on:before-enter="beforeEnter"\
+        v-on:enter="enter"\
+        v-on:beforeLeave="beforeLeave"\
+        v-on:leave="leave"\
+    >\
+        <slot></slot>\
+    </transition-group>\
+    ',
+    methods: {
+        beforeEnter: function(el, done) {
+            console.log('beforeEnter');
+            TweenMax.fromTo(el, 1, { opacity: 0, height: 0 }, { opacity: 1, height: 'auto', ease: Back.easeOut.config(2), onComplete: done });
+
+        },
+        enter: function(el, done) {
+            console.log('enter');
+        },
+        enterCancelled: function(el, done) {},
+        beforeLeave: function(el, done) {
+            TweenMax.fromTo(el, 1, { opacity: 1, height: 'auto' }, { opacity: 0, height: 0, ease: Back.easeOut.config(2), onComplete: done, delay: 4 });
+        },
+        leave: function(el, done) {
+            console.log('leave');
+        },
+        afterLeave: function(el, done) { 
+            console.log('afterLeave'); 
+            
+        },
+        leaveCancelled: function(el, done) {}
+    }
 });
 
 Vue.component('videoComponent', {
@@ -240,7 +279,7 @@ Vue.component('feedbackDisplayComponent', {
                 indexDatas[index].push(obj);
             }
         },
-        saveComment: function (newValue) {
+        saveComment: function(newValue) {
             console.log('save a  comment');
             console.log(newValue);
             this.putData(newValue);

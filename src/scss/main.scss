@@ -20,10 +20,18 @@
 // @import "components/_load.scss"; //html 在 load.js 裡
 // //6.pages
 // //7.themes
-body,html {
+body,
+html {
     background: #eee;
     width: 100%;
 }
+
+.clearfix::after {
+  clear: both;
+  content: '';
+  display: table;
+}
+
 
 .feedback {
     &__avater {
@@ -48,20 +56,24 @@ body,html {
         vertical-align: middle;
         textarea {
             display: inline-block;
+            padding: 10px;
         }
         button {
             display: inline-block;
         }
     }
-    &__info {
-    }
+    &__info {}
     &__box {
         border-radius: 10px;
-        background: #fff;
-        box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
-        padding: 10px;
         line-height: 1.5;
-        margin-bottom: 20px;
+        overflow: hidden;
+        &__inner {
+            border-radius: 15px;
+            background: #fff;
+            box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            margin-bottom: 20px;
+        }
     }
 }
 
@@ -109,7 +121,6 @@ body,html {
                 width: 100px;
                 padding: 5px;
                 border: 0;
-
             }
         }
     }
@@ -146,14 +157,36 @@ body,html {
         width: 100%;
         height: $h;
         position: relative;
+        bottom: 0;
+        left: 0;
         border-radius: 10px 0 0 10px;
-        // overflow: hidden;
+        &__logs {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        &__log {
+            box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
+            width: 5px;
+            height: $h;
+            top: 0px;
+            background: red;
+            position: absolute;
+        }
+        &__dragable {
+            width: 100%;
+            height: $h;
+            position: absolute;
+            bottom: 0;
+            z-index: 2;
+        }
     }
     &__progress {
         box-sizing: border-box;
         background: #00d194;
         height: 100%;
-        width: 50%;
+        width: 0%;
         position: absolute;
         top: 0;
         left: 0;
@@ -206,24 +239,21 @@ body,html {
         }
     }
     &__volume__ctrls {
-      display: inline-block;
-      input {
-        width: 100px;
-      }
+        display: inline-block;
+        input {
+            width: 100px;
+        }
     }
 }
 
 .logs-list {
     background: #000;
     height: 600px;
-    overflow-y:auto; 
+    overflow-y: auto;
     width: 300px;
     position: absolute;
     right: 0px;
-    top:0;
+    top: 0;
     padding: 10px;
-    box-sizing:border-box;
+    box-sizing: border-box;
 }
-
-
-

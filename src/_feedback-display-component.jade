@@ -2,9 +2,10 @@
 div.feedback
     //時間相同，可以是list
     div( v-for="(logs,logskey) in indexDatas" , v-bind:key="logskey" )
-        transition-group(name="custom-classes-transition", enter-active-class="animated fadeIn", leave-active-class="animated fadeOut", tag="div")
-            div.feedback__box.clearfix( v-show=" showType == 'list' || (log.logTime <= (currentTime + 3) && log.logTime >= (currentTime - 0.5))", v-for="(log,logkey) in logs", v-bind:key="logskey")
-                img.feedback__avater( v-bind:src="log.photo", v-bind:alt="log.name" )
-                div.feedback__content
-                    div.feedback__info {{log.logTime | formatVideoTime }} {{log.name}}
-                    div.feedback__content {{log.content}} ----- {{logskey}}----{{logkey}}
+        transition-staggered-fade
+            div.feedback__box( v-show="showType == 'list' ||(log.logTime <= (currentTime + 0.5) && log.logTime >= (currentTime - 0.5))", v-for="(log,logkey) in logs", v-bind:key="logskey")
+                div.feedback__box__inner.clearfix
+                    img.feedback__avater( v-bind:src="log.photo", v-bind:alt="log.name" )
+                    div.feedback__content
+                        div.feedback__info {{log.logTime | formatVideoTime }} {{log.name}}
+                        div.feedback__msg {{log.content}} ----- {{logskey}}----{{logkey}}
